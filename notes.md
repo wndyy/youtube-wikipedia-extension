@@ -10,3 +10,13 @@ JSON-formatted
 
 access extension manifest in javascript using browser.runtime.getManifest()
 
+# Find dom element to manipulate
+
+Inspect page
+documents.getElementsbyClassName("ytp-left-controls")[0]
+document.getElementsByClassName("video-stream")[0]
+
+# Content Script
+match patterns for content scripts
+background js file event listener
+
