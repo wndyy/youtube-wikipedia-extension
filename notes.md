@@ -20,3 +20,6 @@ document.getElementsByClassName("video-stream")[0]
 match patterns for content scripts
 background js file event listener
 
+# Get the current tab from youtube
+
+youtube documentation
