@@ -15,5 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
     } else {
         //if not watching a youtube video
+        const container = document.getElementsByClassName("container")[0];
+        container.innerHTML = '<div class="title">This is not a youtube video page.</div>'
     }
 })
