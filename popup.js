@@ -1,5 +1,34 @@
 import { getActiveTabURL } from "./utils.js"
 
+const addNewBookmark = (bookmarksElement, bookmark) => {
+    const bookmarkTitleElement = document.createElement("div");
+    const newBookmarkElement = document.createElement("div");
+
+    bookmarkTitleElement.textContent = bookmark.desc;
+    bookmarkTitleElement.className = "bookmark-title";
+
+    newBookmarkElement.id = "bookmark-"+ bookmark.time;
+    newBookmarkElement.className = "bookmark";
+    newBookmarkElement.setAttribute("timestamp", bookmark.time);
+
+    newBookmarkElement.appendChild(bookmarkTitleElement);
+    bookmarksElement.appendChild(newBookmarkElement);
+}
+
+const viewBookmarks = (currenBookmarks=[]) => {
+    const bookmarksElement = document.getElementById("bookmarks");
+    bookmarksElement.innerHTML = "";
+
+    if (currentBookmarks.length >  0) {
+        for (let i = 0; i < currentBookmarks.length; i++) {
+            const bookmark = currentBookmarks[i];
+            addNewBookmark(bookmarksElement, bookmark)
+        }
+    } else {
+        bookmarksElement.innerHTML = '<i class="row">No bookmarks to show.</i>'
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     const activeTab = await getActiveTabURL();
     const queryParameters = activeTab.url.split("?")[1];
@@ -12,6 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const currentVideoBookmarks = data[currentVideo] ? JSON.parse(data[currentVideo]) : [];
 
             //viewBookmarks
+            viewBookmarks(currentVideoBookmarks);
         })
     } else {
         //if not watching a youtube video
