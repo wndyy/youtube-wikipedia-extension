@@ -4,11 +4,13 @@
     let currentVideoBookmarks = [];
 
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
-        const {type, vlaue, videoId} = obj;
+        const {type, value, videoId} = obj;
 
         if (type === "NEW") {
             currentVideo = videoId;
             newVideoLoaded();
+        } else if (type=== "PLAY") {
+            youtubePlayer.currentTime = value;
         }
     });
 

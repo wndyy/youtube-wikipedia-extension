@@ -3,18 +3,42 @@ import { getActiveTabURL } from "./utils.js"
 const addNewBookmark = (bookmarksElement, bookmark) => {
     const bookmarkTitleElement = document.createElement("div");
     const newBookmarkElement = document.createElement("div");
+    const controlsElement = document.createElement("div");
 
     bookmarkTitleElement.textContent = bookmark.desc;
     bookmarkTitleElement.className = "bookmark-title";
+
+    controlsElement.className = "bookmark-controls";
 
     newBookmarkElement.id = "bookmark-"+ bookmark.time;
     newBookmarkElement.className = "bookmark";
     newBookmarkElement.setAttribute("timestamp", bookmark.time);
 
+    setBookmarkAtrributes("play", onPlay, controlsElement);
+
     newBookmarkElement.appendChild(bookmarkTitleElement);
+    newBookmarkElement.appendChild(controlsElement);
     bookmarksElement.appendChild(newBookmarkElement);
 }
 
+const onPlay = async e => {
+    const bookmarkTime = e.target.parentNode.parentNode.getAttribut("timestamp");
+    const activeTab = await getActiveTabURL();
+
+    chrome.tabs.sendMessage(activeTab.id, {
+        type: "PLAY",
+        value: bookmarkTime
+    })
+}
+
+const setBookmarkAtrributes = (src, eventListener, controlParentElement) => {
+    const controlElement = document.createElement("img");
+    controlElement.src = "assets/" + src + ".png";
+    controlElement.title = src;
+    controlElement.addEventListener("click", eventListener);
+    controlParentElement.appendChild(controlElement);
+
+}
 const viewBookmarks = (currenBookmarks=[]) => {
     const bookmarksElement = document.getElementById("bookmarks");
     bookmarksElement.innerHTML = "";
